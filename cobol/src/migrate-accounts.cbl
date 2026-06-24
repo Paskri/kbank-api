@@ -1,0 +1,155 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. CREATE-10-ACCOUNTS.
+       AUTHOR PASCAL KRIEG.
+
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+
+       FILE-CONTROL.
+
+           SELECT ACCOUNT-FILE ASSIGN TO "accounts-ind.dat"
+               ORGANIZATION IS INDEXED
+               ACCESS MODE IS DYNAMIC
+               RECORD KEY IS ACC-ID
+               FILE STATUS IS WS-FS.
+
+       DATA DIVISION.
+
+       FILE SECTION.
+
+       FD ACCOUNT-FILE.
+       01 ACCOUNT-RECORD.
+           05 ACC-ID        PIC 9(4).
+           05 ACC-TYPE      PIC X(8).
+           05 ACC-CLIENT-ID PIC 9(4).
+           05 ACC-IBAN      PIC X(27).
+           05 ACC-BALANCE   PIC 9(10).
+           05 ACC-CURRENCY  PIC X(3).
+
+       WORKING-STORAGE SECTION.
+
+       01 WS-FS PIC XX.
+
+       PROCEDURE DIVISION.
+
+       MAIN.
+
+           OPEN OUTPUT ACCOUNT-FILE
+
+           MOVE 0001 TO ACC-ID
+           MOVE "CURRENT" TO ACC-TYPE
+           MOVE 0001 TO ACC-CLIENT-ID
+           MOVE "FR76BKFR3004567890123456789" TO ACC-IBAN
+           MOVE 30000 TO ACC-BALANCE
+           MOVE "EUR" TO ACC-CURRENCY
+           WRITE ACCOUNT-RECORD
+           IF WS-FS NOT = "00"
+               DISPLAY "WRITE ERROR " WS-FS
+           END-IF
+
+           MOVE 0002 TO ACC-ID
+           MOVE "SAVINGS" TO ACC-TYPE
+           MOVE 0001 TO ACC-CLIENT-ID
+           MOVE "FR76SGFR2109876543210987654" TO ACC-IBAN
+           MOVE 20000 TO ACC-BALANCE
+           MOVE "EUR" TO ACC-CURRENCY
+           WRITE ACCOUNT-RECORD
+           IF WS-FS NOT = "00"
+               DISPLAY "WRITE ERROR " WS-FS
+           END-IF
+
+           MOVE 0003 TO ACC-ID
+           MOVE "CURRENT" TO ACC-TYPE
+           MOVE 0002 TO ACC-CLIENT-ID
+           MOVE "FR76BNPA4001239876543214567" TO ACC-IBAN
+           MOVE 10000 TO ACC-BALANCE
+           MOVE "EUR" TO ACC-CURRENCY
+           WRITE ACCOUNT-RECORD
+           IF WS-FS NOT = "00"
+               DISPLAY "WRITE ERROR " WS-FS
+           END-IF
+
+           MOVE 0004 TO ACC-ID
+           MOVE "SAVINGS" TO ACC-TYPE
+           MOVE 0002 TO ACC-CLIENT-ID
+           MOVE "FR76CEPA5009871236547893214" TO ACC-IBAN
+           MOVE 50000 TO ACC-BALANCE
+           MOVE "EUR" TO ACC-CURRENCY
+           WRITE ACCOUNT-RECORD
+           IF WS-FS NOT = "00"
+               DISPLAY "WRITE ERROR " WS-FS
+           END-IF
+
+           MOVE 0005 TO ACC-ID
+           MOVE "CURRENT" TO ACC-TYPE
+           MOVE 0003 TO ACC-CLIENT-ID
+           MOVE "FR76LCLF6004561237896543219" TO ACC-IBAN
+           MOVE 20000 TO ACC-BALANCE
+           MOVE "EUR" TO ACC-CURRENCY
+           WRITE ACCOUNT-RECORD
+           IF WS-FS NOT = "00"
+               DISPLAY "WRITE ERROR " WS-FS
+           END-IF
+
+           MOVE 0006 TO ACC-ID
+           MOVE "SAVINGS" TO ACC-TYPE
+           MOVE 0003 TO ACC-CLIENT-ID
+           MOVE "FR76HSBC7007893216549871236" TO ACC-IBAN
+           MOVE 60000 TO ACC-BALANCE
+           MOVE "EUR" TO ACC-CURRENCY
+           WRITE ACCOUNT-RECORD
+           IF WS-FS NOT = "00"
+               DISPLAY "WRITE ERROR " WS-FS
+           END-IF
+
+           MOVE 0007 TO ACC-ID
+           MOVE "CURRENT" TO ACC-TYPE
+           MOVE 0004 TO ACC-CLIENT-ID
+           MOVE "FR76AXAB8003216549871237894" TO ACC-IBAN
+           MOVE 40000 TO ACC-BALANCE
+           MOVE "EUR" TO ACC-CURRENCY
+           WRITE ACCOUNT-RECORD
+           IF WS-FS NOT = "00"
+               DISPLAY "WRITE ERROR " WS-FS
+           END-IF
+
+           MOVE 0008 TO ACC-ID
+           MOVE "SAVINGS" TO ACC-TYPE
+           MOVE 0004 TO ACC-CLIENT-ID
+           MOVE "FR76SOGE9006549873214561237" TO ACC-IBAN
+           MOVE 50000 TO ACC-BALANCE
+           MOVE "EUR" TO ACC-CURRENCY
+           WRITE ACCOUNT-RECORD
+           IF WS-FS NOT = "00"
+               DISPLAY "WRITE ERROR " WS-FS
+           END-IF
+
+           MOVE 0009 TO ACC-ID
+           MOVE "CURRENT" TO ACC-TYPE
+           MOVE 0005 TO ACC-CLIENT-ID
+           MOVE "FR76BRED1109874563217896541" TO ACC-IBAN
+           MOVE 30000 TO ACC-BALANCE
+           MOVE "EUR" TO ACC-CURRENCY
+           WRITE ACCOUNT-RECORD
+           IF WS-FS NOT = "00"
+               DISPLAY "WRITE ERROR " WS-FS
+           END-IF
+
+           MOVE 0010 TO ACC-ID
+           MOVE "SAVINGS" TO ACC-TYPE
+           MOVE 0005 TO ACC-CLIENT-ID
+           MOVE "FR76CCBP2201236549873214567" TO ACC-IBAN
+           MOVE 20000 TO ACC-BALANCE
+           MOVE "EUR" TO ACC-CURRENCY
+           WRITE ACCOUNT-RECORD
+           IF WS-FS NOT = "00"
+               DISPLAY "WRITE ERROR " WS-FS
+           END-IF
+
+           CLOSE ACCOUNT-FILE
+
+           DISPLAY "10 ACCOUNTS CREATED SUCCESSFULLY"
+
+           STOP RUN.
+
+      * cobc -x cobol/src/migrate-accounts.cbl -o cobol/bin/migrate-accounts
