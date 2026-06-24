@@ -7,4 +7,6 @@ dist
 coverage
 *.log
 .vscode
-bin/
+cobol/bin/
+*.dat
+cobol/data/

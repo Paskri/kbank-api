@@ -15,6 +15,6 @@ app.use("/accounts", require("./routes/accounts"));
 app.use("/cash-move", require("./routes/cash-move"));
 app.use("/alltrans", require("./routes/alltrans"));
 
-app.listen(3000, "0.0.0.0", () => {
+app.listen(3000, "localhost", () => {
   console.log("API running on port 3000");
 });
