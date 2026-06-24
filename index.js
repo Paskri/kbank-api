@@ -4,8 +4,9 @@ const cors = require("cors");
 const app = express();
 
 app.use(cors({
-  origin: "http://localhost:3001", "https://kbank.krieg.fr"
+  origin: ["http://localhost:3001", "https://kbank.krieg.fr"]
 }));
+
 app.use(express.json());
 
 app.use("/clients", require("./routes/clients"));
