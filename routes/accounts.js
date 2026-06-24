@@ -1,11 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const execCobol = require("../functions/execCobol");
+const path = require("path");
+const COBOL_BIN = path.join(__dirname, "..", "cobol", "bin");
 
 router.get("/:ownerId", async (req, res) => {
   const { ownerId } = req.params
+  const COBOL_BIN = path.join(__dirname, "..", "cobol", "bin");
 
-  const stdout = await execCobol("/app/cobol/bin/client-accounts", [ownerId])
+  const stdout = await execCobol(path.join(COBOL_BIN, "accounts"), [ownerId]);
 
   try {
     const result = stdout

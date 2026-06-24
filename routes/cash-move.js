@@ -1,10 +1,12 @@
 const express = require('express')
 const execCobol = require("../functions/execCobol")
+const path = require("path");
 
 const router = express.Router()
 
 router.post('/', async (req, res) => {
   const { clientId, account, move, amount, reason, } = req.body
+  const COBOL_BIN = path.join(__dirname, "..", "cobol", "bin");
 
   if (clientId === undefined || account === undefined || move === undefined || amount === undefined) {
     return res.status(400).json({
@@ -14,7 +16,7 @@ router.post('/', async (req, res) => {
   }
   try {
     const cashMove = await execCobol(
-      "/app/cobol/bin/cash-move",
+      path.join(COBOL_BIN, "cash-move"),
       [clientId, account, move, amount, reason]
     );
 

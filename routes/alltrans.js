@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const execCobol = require("../functions/execCobol")
+const path = require("path");
 
 router.get("/", async (req, res) => {
-
+  const COBOL_BIN = path.join(__dirname, "..", "cobol", "bin");
   try {
-    const transactions = await execCobol("/app/cobol/bin/alltrans");
+    const transactions = await execCobol(path.join(COBOL_BIN, "alltrans"));
     const result = transactions
       .trim()
       .split(/\r?\n/)

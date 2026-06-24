@@ -1,9 +1,11 @@
 const express = require("express");
-const router = express.Router();
 const execCobol = require("../functions/execCobol")
+const path = require("path");
+const router = express.Router();
 
 router.post("/", async (req, res) => {
   const { clientId, from, to, amount, message, } = req.body
+  const COBOL_BIN = path.join(__dirname, "..", "cobol", "bin");
 
   if (clientId === undefined || from === undefined || to === undefined || amount === undefined) {
     return res.status(400).json({
@@ -13,7 +15,7 @@ router.post("/", async (req, res) => {
   }
   try {
     const transfer = await execCobol(
-      "/app/cobol/bin/transfer",
+      path.join(COBOL_BIN, "transfer"),
       [clientId, from, to, 'TRANSFER', amount, message]
     );
     console.log(transfer)
