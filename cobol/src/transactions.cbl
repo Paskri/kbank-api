@@ -6,7 +6,7 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT TRANSACTION-FILE 
-              ASSIGN TO "/app/cobol/data/transactions.dat"
+              ASSIGN TO "cobol/data/transactions.dat"
               ORGANIZATION IS LINE SEQUENTIAL.
 
        DATA DIVISION.

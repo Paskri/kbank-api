@@ -7,7 +7,7 @@
 
        FILE-CONTROL.
            SELECT ACCOUNTS-FILE 
-               ASSIGN TO "/app/cobol/data/accounts-ind.dat"
+               ASSIGN TO "cobol/data/accounts-ind.dat"
                ORGANIZATION IS INDEXED
                ACCESS MODE IS DYNAMIC
                RECORD KEY IS ACCOUNT-ID

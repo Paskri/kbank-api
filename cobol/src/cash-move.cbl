@@ -9,18 +9,18 @@
        FILE-CONTROL.
 
            SELECT ACCOUNT-FILE
-              ASSIGN TO "/app/cobol/data/accounts-ind.dat"
+              ASSIGN TO "cobol/data/accounts-ind.dat"
               ORGANIZATION IS INDEXED
               ACCESS MODE IS DYNAMIC
               RECORD KEY IS ACC-ID
               FILE STATUS IS WS-ACC-STATUS.
 
            SELECT TRANSACTION-FILE
-              ASSIGN TO "/app/cobol/data/transactions.dat"
+              ASSIGN TO "cobol/data/transactions.dat"
               ORGANIZATION IS LINE SEQUENTIAL.
 
            SELECT TR-COUNTER-FILE
-              ASSIGN TO "/app/cobol/data/tr-counter.dat"
+              ASSIGN TO "cobol/data/tr-counter.dat"
               ORGANIZATION IS LINE SEQUENTIAL.
        DATA DIVISION.
 

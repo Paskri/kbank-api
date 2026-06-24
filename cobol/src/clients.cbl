@@ -5,7 +5,7 @@
        ENVIRONMENT DIVISION.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-           SELECT CLIENT-FILE ASSIGN TO "/app/cobol/data/clients.dat"
+           SELECT CLIENT-FILE ASSIGN TO "cobol/data/clients.dat"
            ORGANIZATION IS LINE SEQUENTIAL.
 
        DATA DIVISION.
