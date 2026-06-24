@@ -1,0 +1,7 @@
+cobc -x cobol/src/expense.cbl -o cobol/bin/expense
+cobc -x cobol/src/client-accounts.cbl -o cobol/bin/client-accounts
+cobc -x cobol/src/alltrans.cbl -o cobol/bin/alltrans       
+cobc -x cobol/src/cash-move.cbl -o cobol/bin/cash-move
+cobc -x cobol/src/clients.cbl -o cobol/bin/clients
+cobc -x cobol/src/transactions.cbl -o cobol/bin/transactions
+cobc -x cobol/src/transfer.cbl -o cobol/bin/transfer
