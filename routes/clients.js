@@ -63,9 +63,7 @@ router.get("/", async (req, res) => {
           .filter(l => l.length > 0)
           .filter(l => l !== '[' && l !== ']')
           .map(l => {
-            // enlève la virgule finale COBOL
             const cleaned = l.replace(/,\s*$/, '');
-
             try {
               return JSON.parse(cleaned);
             } catch (e) {

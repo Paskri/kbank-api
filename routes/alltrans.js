@@ -14,9 +14,13 @@ router.get("/", async (req, res) => {
       .filter(l => l.length > 0)
       .filter(l => l !== '[' && l !== ']')
       .map(l => {
-        // enlève la virgule finale COBOL
         const cleaned = l.replace(/,\s*$/, '');
-        return JSON.parse(cleaned);
+        try {
+          return JSON.parse(cleaned);
+        } catch (e) {
+          console.error("Parse error line:", cleaned);
+          return null;
+        }
       })
       .filter(Boolean);
 

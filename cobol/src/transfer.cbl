@@ -137,6 +137,8 @@
                    WS-ACCOUNT-ID
                    '","to":"'
                    WS-TARGET-ID
+                   '","amount":"'
+                   WS-AMOUNT
                    '","newBalance":"'
                    ACC-BALANCE
                    '"}'

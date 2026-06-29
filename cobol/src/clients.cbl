@@ -30,7 +30,6 @@
                       MOVE "Y" TO EOF
                    NOT AT END
                       DISPLAY CLIENT-ID "|" CLIENT-NAME "|" CLIENT-FIRST
-                       
                END-READ
            END-PERFORM
 

@@ -46,7 +46,7 @@
            05 TR-HOUR       PIC X(8).
            05 TR-TYPE       PIC X(10).
            05 TR-AMOUNT     PIC 9(10).
-           05 TR-STATUS     PIC X(10) VALUE SPACES.
+           05 TR-STATUS     PIC X(10).
            05 TR-REASON     PIC X(100).
 
        FD TR-COUNTER-FILE.
@@ -65,7 +65,6 @@
 
        01 WS-DATE           PIC 9(8).
        01 WS-TIME           PIC 9(6).
-
        01 WS-DATE-F         PIC X(10).
        01 WS-TIME-F         PIC X(8).
 
@@ -201,7 +200,6 @@
 
        ABORT-MOVE.
            MOVE 'REJECTED' TO WS-STATUS
-           MOVE 'R' TO WS-TR-TYPE
            PERFORM WRITE-TRANSACTION
            CLOSE ACCOUNT-FILE.
 

@@ -39,14 +39,14 @@
        01 TRANSACTION-RECORD.
            05 TR-ID         PIC X(6).
            05 TR-ACCOUNT-ID PIC X(4).
-           05 TR-FROM-ID    PIC X(4) VALUE '0000'.
-           05 TR-TARGET-ID  PIC X(4) VALUE '0000'.
+           05 TR-FROM-ID    PIC X(4).
+           05 TR-TARGET-ID  PIC X(4).
            05 TR-CLIENT-ID  PIC X(4).
            05 TR-DATE       PIC X(10).
            05 TR-HOUR       PIC X(8).
            05 TR-TYPE       PIC X(10).
            05 TR-AMOUNT     PIC 9(10).
-           05 TR-STATUS     PIC X(10) VALUE SPACES.
+           05 TR-STATUS     PIC X(10).
            05 TR-REASON     PIC X(100).
 
        FD TR-COUNTER-FILE.
