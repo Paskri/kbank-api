@@ -1,12 +1,12 @@
 # Fichier : transactions.dat
 
-**Type :** LINE SEQUENTIAL
+**Type :** INDEXED, KEY IS TR-ID
 
 **Description :** Historique complet des opérations bancaires (dépôts, retraits, virements internes, virements externes et paiements par carte).
 
 | Position | Taille | Champ                |
 | -------- | ------ | -------------------- |
-| 1        | 6      | TR-ID                |
+| 1        | 8      | TR-ID                |
 | 7        | 4      | TR-ACCOUNT-ID        |
 | 11       | 4      | TR-FROM-ID           |
 | 15       | 4      | TR-TO-ID             |
@@ -18,21 +18,21 @@
 | 61       | 10     | TR-STATUS            |
 | 71       | 100    | TR-REASON            |
 
-**Longueur totale : 170 caractères**
+**Longueur totale : 172 caractères**
 
 ---
 
 ## Exemple d'enregistrement
 
 ```text
-00000100020002000300012026-06-2314:30:00TRANSFER 0000015000EXECUTED Virement compte courant vers épargne
+00001T0100020002000300012026-06-2314:30:00TRANSFER 0000015000EXECUTED Virement compte courant vers épargne
 ```
 
 ## Détail des champs
 
 | Champ         | Valeur                               |
 | ------------- | ------------------------------------ |
-| TR-ID         | 000001                               |
+| TR-ID         | 00001T01                               |
 | TR-ACCOUNT-ID | 0002                                 |
 | TR-FROM-ID    | 0002                                 |
 | TR-TO-ID      | 0003                                 |
@@ -52,7 +52,7 @@
 FD TRANSACTION-FILE.
 
 01 TRANSACTION-RECORD.
-   05 TR-ID         PIC X(6).
+   05 TR-ID         PIC X(8).
    05 TR-ACCOUNT-ID PIC X(4).
    05 TR-FROM-ID    PIC X(4).
    05 TR-TO-ID      PIC X(4).
@@ -79,4 +79,4 @@ FD TRANSACTION-FILE.
 - **TR-STATUS** : état de traitement (`PENDING`, `EXECUTED`, `REJECTED`).
 - **TR-REASON** : motif ou libellé de l'opération.
 
-Cette structure unique permet de gérer l'ensemble des mouvements bancaires du système KBank au sein d'un seul fichier séquentiel.
+Cette structure unique permet de gérer l'ensemble des mouvements bancaires du système KBank au sein d'un seul fichier indexé.
