@@ -6,9 +6,6 @@ const router = express.Router()
 router.post('/', async (req, res) => {
   const { clientId, account, move, amount, reason, } = req.body
   const COBOL_BIN = path.join(__dirname, "..", "cobol", "bin");
-  process.env.ACCOUNT_FILE = path.join(COBOL_DATA, "accounts-ind.dat");
-  process.env.TRANSACTION_FILE = path.join(COBOL_DATA, "transactions.dat");
-  process.env.TR_COUNTER_FILE = path.join(COBOL_DATA, "tr-counter.dat");
 
   if (clientId === undefined || account === undefined || move === undefined || amount === undefined) {
     return res.status(400).json({
@@ -17,12 +14,12 @@ router.post('/', async (req, res) => {
     })
   }
   try {
-    const cashMove = await execCobol(
+    const expense = await execCobol(
       path.join(COBOL_BIN, "expense"),
       [clientId, account, move, amount, reason]
     );
-    console.log(cashMove)
-    const result = (JSON.parse(cashMove))
+    console.log(expense)
+    const result = (JSON.parse(expense))
     if (result.success) {
       return res.json(result);
     }

@@ -7,7 +7,7 @@ router.get("/", async (req, res) => {
   const COBOL_BIN = path.join(__dirname, "..", "cobol", "bin");
   try {
 
-    const transactions = await execCobol(path.join(COBOL_BIN, "alltrans"));
+    const transactions = await execCobol(path.join(COBOL_BIN, "waiting-tr"));
     const result = transactions
       .trim()
       .split(/\r?\n/)

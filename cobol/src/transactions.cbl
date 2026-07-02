@@ -7,31 +7,35 @@
        FILE-CONTROL.
            SELECT TRANSACTION-FILE 
               ASSIGN TO "cobol/data/transactions.dat"
-              ORGANIZATION IS LINE SEQUENTIAL.
+              ORGANIZATION IS INDEXED
+               ACCESS MODE IS DYNAMIC
+               RECORD KEY IS TR-ID
+               FILE STATUS IS WS-FS.
 
        DATA DIVISION.
        FILE SECTION.
 
        FD TRANSACTION-FILE.
        01 TRANSACTION-RECORD.
-           05 TR-ID         PIC X(6).
-           05 TR-ACCOUNT-ID PIC X(4).
-           05 TR-FROM-ID    PIC X(4).
-           05 TR-TO-ID      PIC X(4).
-           05 TR-CLIENT-ID  PIC X(4).
-           05 TR-DATE       PIC X(10).
-           05 TR-HOUR       PIC X(8).
-           05 TR-TYPE       PIC X(10).
-           05 TR-AMOUNT     PIC 9(10).
-           05 TR-STATUS     PIC X(10) VALUE SPACES.
-           05 TR-REASON     PIC X(100).
+           05 TR-ID          PIC X(8).
+           05 TR-ACCOUNT-ID  PIC X(4).
+           05 TR-FROM-ID     PIC X(4).
+           05 TR-TO-ID       PIC X(4).
+           05 TR-CLIENT-ID   PIC X(4).
+           05 TR-DATE        PIC X(10).
+           05 TR-HOUR        PIC X(8).
+           05 TR-TYPE        PIC X(10).
+           05 TR-AMOUNT      PIC 9(10).
+           05 TR-STATUS      PIC X(10) VALUE SPACES.
+           05 TR-REASON      PIC X(100).
 
        WORKING-STORAGE SECTION.
-       01 EOF           PIC X VALUE "N".
-       01 WS-ACCOUNT-ID PIC X(4).
-       01 WS-TR-CONTENT PIC X(255).
-       01 WS-COMMA      PIC X.
-
+       01 EOF                PIC X VALUE "N".
+       01 WS-ACCOUNT-ID      PIC X(4).
+       01 WS-TR-CONTENT      PIC X(255).
+       01 WS-COMMA           PIC X.
+       01 WS-FS              PIC XX.
+       
        PROCEDURE DIVISION.
 
            ACCEPT WS-ACCOUNT-ID  FROM ARGUMENT-VALUE
@@ -51,14 +55,17 @@
                    AND FUNCTION TRIM(TR-TYPE) = 'TRANSFER'
                    AND FUNCTION TRIM(TR-STATUS) = 'EXECUTED'
                        PERFORM SEND-JSON
-                       
-                   ELSE 
-                       IF TR-ACCOUNT-ID = WS-ACCOUNT-ID
-                       AND FUNCTION TRIM(TR-STATUS) = 'EXECUTED'
-                       AND TR-ID (1:1) NOT = 'T'
-
-                       PERFORM SEND-JSON
-
+                   ELSE
+                       IF (TR-TO-ID = WS-ACCOUNT-ID)
+                          AND FUNCTION TRIM(TR-TYPE) = 'TRANSFER'
+                          AND FUNCTION TRIM(TR-STATUS) = 'EXECUTED'
+                             PERFORM SEND-JSON
+                       ELSE 
+                           IF TR-ACCOUNT-ID = WS-ACCOUNT-ID
+                             AND FUNCTION TRIM(TR-STATUS) = 'EXECUTED'
+                             AND TR-ID (6:1) NOT = 'T'
+                             PERFORM SEND-JSON
+                           END-IF
                        END-IF
                    END-IF
                END-READ

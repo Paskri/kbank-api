@@ -1,5 +1,5 @@
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. ALLTRANS.
+       PROGRAM-ID. WAITING-TR.
        AUTHOR PASCAL KRIEG.
 
        ENVIRONMENT DIVISION.
@@ -17,27 +17,30 @@
 
        FD TRANSACTION-FILE.
        01 TRANSACTION-RECORD.
-           05 TR-ID         PIC 9(8).
-           05 TR-ACCOUNT-ID PIC X(4).
-           05 TR-FROM-ID    PIC X(4).
-           05 TR-TO-ID      PIC X(4).
-           05 TR-CLIENT-ID  PIC X(4).
-           05 TR-DATE       PIC X(10).
-           05 TR-HOUR       PIC X(8).
-           05 TR-TYPE       PIC X(10).
-           05 TR-AMOUNT     PIC 9(10).
-           05 TR-STATUS     PIC X(10).
-           05 TR-REASON     PIC X(100).
+           05 TR-ID          PIC X(8).
+           05 TR-ACCOUNT-ID  PIC X(4).
+           05 TR-FROM-ID     PIC X(4).
+           05 TR-TO-ID       PIC X(4).
+           05 TR-CLIENT-ID   PIC X(4).
+           05 TR-DATE        PIC X(10).
+           05 TR-HOUR        PIC X(8).
+           05 TR-TYPE        PIC X(10).
+           05 TR-AMOUNT      PIC 9(10).
+           05 TR-STATUS      PIC X(10) VALUE SPACES.
+           05 TR-REASON      PIC X(100).
 
        WORKING-STORAGE SECTION.
-       01 EOF             PIC X VALUE "N".
-       01 WS-TR-CONTENT   PIC X(255).
-       01 WS-COMMA        PIC X.
-       01 WS-FS           PIC XX.
-
+       01 EOF                PIC X VALUE "N".
+       01 WS-ACCOUNT-ID      PIC X(4).
+       01 WS-TR-CONTENT      PIC X(255).
+       01 WS-COMMA           PIC X.
+       01 WS-FS              PIC XX.
+       
        PROCEDURE DIVISION.
 
-           OPEN I-O TRANSACTION-FILE
+           ACCEPT WS-ACCOUNT-ID  FROM ARGUMENT-VALUE
+
+           OPEN INPUT TRANSACTION-FILE
            DISPLAY '['
            PERFORM UNTIL EOF = "Y"
                READ TRANSACTION-FILE
@@ -46,7 +49,11 @@
                       MOVE ' ' TO WS-COMMA
                    NOT AT END
                       MOVE ',' TO WS-COMMA
-                      PERFORM SEND-JSON
+                   
+                   IF FUNCTION TRIM(TR-STATUS) = 'PENDING'
+                   AND FUNCTION TRIM(TR-TYPE) = 'PAYMENT'
+                       PERFORM SEND-JSON
+                   END-IF
                END-READ
            END-PERFORM
            DISPLAY ']'
@@ -58,7 +65,7 @@
 
            MOVE SPACES TO WS-TR-CONTENT   
               STRING '{"id": "' DELIMITED BY SIZE
-                  TR-ID DELIMITED BY SIZE
+                  TR-ID
                   '", "accountId": "' DELIMITED BY SIZE
                   TR-ACCOUNT-ID DELIMITED BY SIZE
                   '", "from": "' DELIMITED BY SIZE

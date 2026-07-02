@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
       path.join(COBOL_BIN, "cash-move"),
       [clientId, account, move, amount, reason]
     );
-
+    console.log(cashMove)
     const result = (JSON.parse(cashMove))
     if (result.success) {
       return res.json(result);
